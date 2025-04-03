@@ -1,15 +1,12 @@
 import React from "react";
 import { useState } from "react";
 
-export default function ContactRow({ contacts }) {
+export default function ContactRow({ contact }) {
   return (
-    {contacts.map((contact) => {
-        return
-   (<tr>
+    <tr>
       <td>{contact.name}</td>
       <td>{contact.email}</td>
       <td>{contact.phone}</td>
-    </tr>);
-    }
+    </tr>
   );
 }

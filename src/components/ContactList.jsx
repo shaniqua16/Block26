@@ -13,7 +13,6 @@ export default function ContactList() {
 
   return (
     <div>
-      ContactList
       <table>
         <thead>
           <tr>
@@ -26,9 +25,10 @@ export default function ContactList() {
             <td>Email</td>
             <td>Phone</td>
           </tr>
-          <ContactRow  contacts={contacts} />;
+          {contacts.map((contact) => {
+            return <ContactRow key= {contact.id} contact={contact} />;
               
-        
+          })}
         </tbody>
       </table>
     </div>
