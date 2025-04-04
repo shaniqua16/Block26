@@ -16,15 +16,17 @@ export default function ContactList() {
   const [contacts, setContacts] = useState(dummyContacts);
   
   useEffect (()=>{
-    const getContactInfo= async () =>{
+    async function fetchContacts() {
         try {
-            const data= {dummyContacts};
-            Response= await fetch (data)
+            const Response= await fetch("https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users");
+            const result = await Response.json();
+            setContacts(result);
         } catch (error) {
-            
+            console.log(error);
         }
     }
-  },[])
+    fetchContacts()
+  },[]);
 
 
   return (
