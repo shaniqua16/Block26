@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import ContactRow from "./ContactRow";
 import { useEffect } from "react";
+import SelectedContact from "./SelectedContact";
+
 
 
 const dummyContacts = [
@@ -11,23 +13,37 @@ const dummyContacts = [
 ];
 
 
-
-export default function ContactList() {
+export default function ContactList({ setSelectedContactId }) {
   const [contacts, setContacts] = useState(dummyContacts);
   
-  useEffect (()=>{
+  useEffect(() => {
     async function fetchContacts() {
-        try {
-            const Response= await fetch("https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users");
-            const result = await Response.json();
-            setContacts(result);
-        } catch (error) {
-            console.log(error);
-        }
+      try {
+        const Response = await fetch(
+          "https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users"
+        );
+        const result = await Response.json();
+        setContacts(result);
+      } catch (error) {
+        console.log(error);
+      }
     }
-    fetchContacts()
-  },[]);
+    fetchContacts();
+  }, []);
+  
 
+  async function handleContactClick(contactId) {
+    
+    try {
+      const Response = await fetch(
+        `https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users/${contactId}`
+      );
+      const result = await Response.json();
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <table>
@@ -37,15 +53,16 @@ export default function ContactList() {
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr >
           <th>Name</th>
           <th>Email</th>
           <th>Phone</th>
         </tr>
         {contacts.map((contact) => {
-          return <ContactRow key={contact.id} contact={contact} />;
+          return <ContactRow key={contact.id} contact={contact} setSelectedContactId={setSelectedContactId}/>;
         })}
       </tbody>
     </table>
   );
 }
+
